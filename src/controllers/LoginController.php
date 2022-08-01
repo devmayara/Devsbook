@@ -7,7 +7,12 @@ use \core\Controller;
 class LoginController extends Controller {
 
     public function signin() {
-        echo '<h1>Login</h1>';
+        $this->render('login');
+    }
+
+    public function signinAction() {
+        echo '<h1>login - recebido</h1>';
+
     }
 
     public function signup() {
