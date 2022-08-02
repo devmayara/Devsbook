@@ -1,5 +1,5 @@
 
-<?= $render('header'); ?>
+<?= $render('header', ['loggedUser'=>$loggedUser]); ?>
 
     <section class="container main">
         <?= $render('sidebar'); ?>
@@ -15,7 +15,7 @@
                                 <div class="feed-new-avatar">
                                     <img src="media/avatars/default.jpg" />
                                 </div>
-                                <div class="feed-new-input-placeholder">O que você está pensando, Bonieky?</div>
+                                <div class="feed-new-input-placeholder">O que você está pensando, Mayara?</div>
                                 <div class="feed-new-input" contenteditable="true"></div>
                                 <div class="feed-new-send">
                                     <img src="<?= $base; ?>/assets/images/send.png" />
@@ -31,7 +31,7 @@
                                     <a href=""><img src="<?= $base; ?>/media/avatars/default.jpg" /></a>
                                 </div>
                                 <div class="feed-item-head-info">
-                                    <a href=""><span class="fidi-name">Bonieky Lacerda</span></a>
+                                    <a href=""><span class="fidi-name">Mayara Silva</span></a>
                                     <span class="fidi-action">fez um post</span>
                                     <br/>
                                     <span class="fidi-date">07/03/2020</span>

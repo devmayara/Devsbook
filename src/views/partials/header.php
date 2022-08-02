@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>Devsbook</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/>
     <link rel="stylesheet" href="<?= $base; ?>/assets/css/style.css" />
 </head>
@@ -15,19 +15,19 @@
             <div class="head-side">
                 <div class="head-side-left">
                     <div class="search-area">
-                        <form method="GET">
+                        <form action="<?= $base; ?>/pesquisa" method="GET">
                             <input type="search" placeholder="Pesquisar" name="s" />
                         </form>
                     </div>
                 </div>
                 <div class="head-side-right">
-                    <a href="" class="user-area">
-                        <div class="user-area-text">Bonieky</div>
+                    <a href="<?= $base; ?>/perfil" class="user-area">
+                        <div class="user-area-text"><?= $loggedUser->name; ?></div>
                         <div class="user-area-icon">
-                            <img src="<?= $base; ?>/media/avatars/avatar.jpg" />
+                            <img src="<?= $base; ?>/media/avatars/<?= $loggedUser->avatar; ?>" />
                         </div>
                     </a>
-                    <a href="" class="user-logout">
+                    <a href="<?= $base; ?>/sair" class="user-logout">
                         <img src="<?= $base; ?>/assets/images/power_white.png" />
                     </a>
                 </div>
