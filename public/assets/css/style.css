@@ -391,6 +391,28 @@ header .head-side {
     margin:0;
 }
 
+.feed-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom:10px;
+}
+.feed-pagination a {
+    display: inline-block;
+    padding: 7px 10px;
+    border: 1px solid #ccc;
+    margin: 5px;
+    text-decoration: none;
+    color:#000;
+}
+.feed-pagination a:hover {
+    background-color: #ddd;
+}
+.feed-pagination a.active {
+    background-color: #224b7a;
+    color:#FFF;
+}
+
 @media (max-width: 992px) {
     header .head-side-right {
         display:none !important;
