@@ -26,20 +26,47 @@ class PostHandler {
         // pegar lista de usuários que EU sigo
         $userList = UserRelation::select()
             ->where('user_from', $idUser)
-            ->get();
+        ->get();
+
         $users = [];
         foreach ($userList as $userItem) {
             $users[] = $userItem('user_to');
         }
         $users[] = $idUser;
 
-        // pegar os posts do user que sigo pela data
+        // pegar os posts ordenando pela data
+        $postsList = Post::select()
+            ->where('id_user', 'in', $users)
+            ->orderBy('created_at', 'desc')
+        ->get();
 
         // transformar o resultado em objeto dos models
+        $posts = [];
+        foreach ($postsList as $postItem) {
+            $newPost = new Post();
+            $newPost->id = $postItem['id'];
+            $newPost->type = $postItem['type'];
+            $newPost->body = $postItem['body'];
+            $newPost->created_at = $postItem['created_at'];
 
-        // preencher as informações adicionais no post
+            // preencher as informações adicionais no post
+            $newUser = User::select()
+                ->where('id', $postItem['id_user'])
+            ->one();
 
-        // retornar o resultado
+            $newPost->user = new User();
+            $newPost->user->id = $newUser['id'];
+            $newPost->user->name = $newUser['name'];
+            $newPost->user->avatar = $newUser['avatar'];
+
+            // preencher infomações de LIKES
+
+            // preencher infomações de COMENTÁRIOS
+
+            $posts[] = $newPost;
+        }
+
+        return $posts;
     }
 
 }
