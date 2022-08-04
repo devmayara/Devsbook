@@ -3,21 +3,24 @@
 namespace src\controllers;
 
 use \core\Controller;
-use \src\handlers\LoginHandler;
+use \src\handlers\UserHandler;
 use src\handlers\PostHandler;
 
-class PostController extends Controller {
+class PostController extends Controller
+{
 
     private $loggerUser;
 
-    public function __construct() {
-        $this->loggerUser = LoginHandler::checkLogin();
-        if (LoginHandler::checkLogin() === false) {
+    public function __construct()
+    {
+        $this->loggerUser = UserHandler::checkLogin();
+        if (UserHandler::checkLogin() === false) {
             $this->redirect('/login');
         }
     }
 
-    public function new() {
+    public function new()
+    {
         $body = filter_input(INPUT_POST, 'body');
 
         if ($body) {
@@ -30,5 +33,4 @@ class PostController extends Controller {
 
         $this->redirect('/');
     }
-
 }
