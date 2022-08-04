@@ -102,8 +102,10 @@ class UserHandler
                     $user->following[] = $newUser;
                 }
 
-                // photos
-                $user->$photos = PostHandler::getPhotosFrom($id);
+                $photos = PostHandler::getPhotosFrom($id);
+                foreach ($photos as $photo) {
+                    $user->photos[] = $photo;
+                }
             }
 
             return $user;
