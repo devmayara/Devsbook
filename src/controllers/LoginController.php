@@ -3,11 +3,13 @@
 namespace src\controllers;
 
 use \core\Controller;
-use \src\handlers\LoginHandler;
+use \src\handlers\UserHandler;
 
-class LoginController extends Controller {
+class LoginController extends Controller
+{
 
-    public function signin() {
+    public function signin()
+    {
         $flash = '';
         if (!empty($_SESSION['flash'])) {
             $flash = $_SESSION['flash'];
@@ -18,12 +20,13 @@ class LoginController extends Controller {
         ]);
     }
 
-    public function signinAction() {
+    public function signinAction()
+    {
         $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
         $password = filter_input(INPUT_POST, 'password');
 
         if ($email && $password) {
-            $token = LoginHandler::verifyLogin($email, $password);
+            $token = UserHandler::verifyLogin($email, $password);
             if ($token) {
                 $_SESSION['token'] = $token;
                 $this->redirect('/');
@@ -37,7 +40,8 @@ class LoginController extends Controller {
         }
     }
 
-    public function signup() {
+    public function signup()
+    {
         $flash = '';
         if (!empty($_SESSION['flash'])) {
             $flash = $_SESSION['flash'];
@@ -48,7 +52,8 @@ class LoginController extends Controller {
         ]);
     }
 
-    public function signupAction() {
+    public function signupAction()
+    {
         $name = filter_input(INPUT_POST, 'name');
         $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
         $password = filter_input(INPUT_POST, 'password');
@@ -66,19 +71,23 @@ class LoginController extends Controller {
                 $_SESSION['flash'] = 'Data de nascimento inválida!';
                 $this->redirect('/cadastro');
             }
-                
-            if (LoginHandler::emailExists($email) === false) {
-                $token = LoginHandler::addUser($name, $email, $password, $birthdate);
+
+            if (UserHandler::emailExists($email) === false) {
+                $token = UserHandler::addUser($name, $email, $password, $birthdate);
                 $_SESSION['token'] = $token;
                 $this->redirect('/');
             } else {
                 $_SESSION['flash'] = 'E-mail já cadastrado!';
                 $this->redirect('/cadastro');
             }
-            
         } else {
             $this->redirect('/cadastro');
         }
     }
 
+    public function logout()
+    {
+        $_SESSION['token'] = '';
+        $this->redirect('/');
+    }
 }

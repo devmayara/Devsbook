@@ -3,21 +3,34 @@
 namespace src\controllers;
 
 use \core\Controller;
-use \src\handlers\LoginHandler;
+use \src\handlers\UserHandler;
+use \src\handlers\PostHandler;
 
-class HomeController extends Controller {
+class HomeController extends Controller
+{
 
     private $loggerUser;
 
-    public function __construct() {
-        $this->loggerUser = LoginHandler::checkLogin();
-        if (LoginHandler::checkLogin() === false) {
+    public function __construct()
+    {
+        $this->loggerUser = UserHandler::checkLogin();
+        if (UserHandler::checkLogin() === false) {
             $this->redirect('/login');
         }
     }
 
-    public function index() {
-        $this->render('home', ['nome' => 'Mayara']);
-    }
+    public function index()
+    {
+        $page = intval(filter_input(INPUT_GET, 'page'));
 
+        $feed = PostHandler::getHomeFeed(
+            $this->loggerUser->id,
+            $page
+        );
+
+        $this->render('home', [
+            'loggedUser' => $this->loggerUser,
+            'feed' => $feed
+        ]);
+    }
 }
