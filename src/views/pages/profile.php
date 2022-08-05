@@ -78,7 +78,7 @@
                             <span>(<?= count($user->following);?>)</span>
                         </div>
                         <div class="box-header-buttons">
-                            <a href="">ver todos</a>
+                            <a href="<?= $base; ?>/perfil/<?= $user->id; ?>/amigos">ver todos</a>
                         </div>
                     </div>
                     <div class="box-body friend-list">
@@ -86,12 +86,12 @@
                         <?php for($q=0;$q<9;$q++): ?>
                             <?php if(isset($user->following[$q])): ?>
                                 <div class="friend-icon">
-                                    <a href="<?= $base; ?>/perfil/<?= $user->$follower[$q]->id; ?>">
+                                    <a href="<?= $base; ?>/perfil/<?= $user->following[$q]->id; ?>">
                                         <div class="friend-icon-avatar">
-                                            <img src="<?= $base; ?>/media/avatars/<?= $user->$follower[$q]->avatar; ?>" />
+                                            <img src="<?= $base; ?>/media/avatars/<?= $user->following[$q]->avatar; ?>" />
                                         </div>
                                         <div class="friend-icon-name">
-                                            <?= $user->$follower[$q]->name; ?>
+                                            <?=$user->following[$q]->name;?>
                                         </div>
                                     </a>
                                 </div>
