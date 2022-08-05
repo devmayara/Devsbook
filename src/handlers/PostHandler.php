@@ -93,8 +93,8 @@ class PostHandler {
         ->get();
 
         $users = [];
-        foreach ($userList as $userItem) {
-            $users[] = $userItem('user_to');
+        foreach($userList as $userItem) {
+            $users[] = $userItem['user_to'];
         }
         $users[] = $idUser;
 

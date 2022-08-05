@@ -66,7 +66,7 @@ class ProfileController extends Controller
         ]);
     }
 
-    public static function follow($atts) 
+    public function follow($atts) 
     {
         $to = intval($atts['id']);
 
@@ -81,6 +81,37 @@ class ProfileController extends Controller
         }
 
         $this->redirect('/perfil/' . $to);
+    }
+
+    public function friends($atts = []) 
+    {
+        $id = $this->loggerUser->id;
+        if (!empty($atts['id'])) {
+            $id = $atts['id'];
+        }
+
+        $user = UserHandler::getUser($id, true);
+        if (!$user) {
+            $this->redirect('/');
+        }
+
+        $dataFrom = new \DateTime($user->birthdate);
+        $dateTo = new \DateTime('today');
+        $user->ageYears = $dataFrom->diff($dateTo)->y;
+
+        $isFollowing = false;
+        if ($user->id != $this->loggerUser->id) {
+            $isFollowing = UserHandler::isFollowing(
+                $this->loggerUser->id, 
+                $user->id
+            );
+        }
+
+        $this->render('profile_friends', [
+            'loggedUser' => $this->loggerUser,
+            'user' => $user,
+            'isFollowing' => $isFollowing
+        ]);
     }
 
 }
