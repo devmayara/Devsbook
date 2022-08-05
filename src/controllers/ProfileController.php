@@ -66,4 +66,21 @@ class ProfileController extends Controller
         ]);
     }
 
+    public static function follow($atts) 
+    {
+        $to = intval($atts['id']);
+
+        if (UserHandler::idExists($to)) {
+            if (UserHandler::isFollowing($this->loggerUser->id, $to)) {
+                // Deixar de seguir
+                UserHandler::unfollow($this->loggerUser->id, $to);
+            } else {
+                // Seguir
+                UserHandler::follow($this->loggerUser->id, $to);
+            }
+        }
+
+        $this->redirect('/perfil/' . $to);
+    }
+
 }
