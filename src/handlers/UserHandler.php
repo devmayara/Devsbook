@@ -180,4 +180,22 @@ class UserHandler
         return $users;
     }
 
+    public static function updateUser($fields, $idUser) {
+        if(count($fields) > 0) {
+
+            $update = User::update();
+
+            foreach($fields as $fieldName => $fieldValue) {
+                if($fieldName == 'password') {
+                    $fieldValue = password_hash($fieldValue, PASSWORD_DEFAULT);
+                }
+
+                $update->set($fieldName, $fieldValue);
+            }
+
+            $update->where('id', $idUser)->execute();
+
+        }
+    }
+
 }
