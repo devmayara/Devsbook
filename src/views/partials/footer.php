@@ -6,7 +6,7 @@
         </div>
     </div>
     <script>
-        const BASE = '<?= $base; ?>',
+        const BASE = '<?=$base;?>';
     </script>
     <script type="text/javascript" src="<?= $base; ?>/assets/js/script.js"></script>
     <script type="text/javascript" src="<?= $base; ?>/assets/js/vanillaModal.js"></script>
