@@ -232,13 +232,20 @@ header .head-side {
     display: none;
     color:#333;
 }
+.feed-new-photo,
 .feed-new-send {
     cursor: pointer;
     margin-right:5px;
 }
+.feed-new-photo img,
 .feed-new-send img {
     width:25px;
     height:25px;
+}
+.feed-new-file {
+    position: absolute;
+    left: -500px;
+    top: -500px;
 }
 
 .banners .box-body {
@@ -431,6 +438,31 @@ header .head-side {
 }
 .button:hover {
     background-color:#477dbb;
+}
+
+.config-form {
+    margin-top:10px;
+}
+.config-form label {
+    display:block;
+    padding:10px 0;
+}
+.config-form input {
+    padding:10px 15px;
+    font-size:14px;
+    width:100%;
+    max-width:500px;
+}
+.config-form .image-edit {
+    max-width: 150px;
+}
+
+.flash {
+    border:2px solid red;
+    background-color:red;
+    color:white;
+    padding:10px;
+    margin-bottom:20px;
 }
 
 @media (max-width: 992px) {

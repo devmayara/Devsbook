@@ -15,10 +15,8 @@
     <section class="container main">
         <form action="<?= $base; ?>/cadastro" method="POST">
 
-            <?php if (!empty($flash)) : ?>
-                <div class="flash">
-                    <?= $flash; ?>
-                </div>
+            <?php if(!empty($flash)): ?>
+                <div class="flash"><?php echo $flash; ?></div>
             <?php endif; ?>
 
             <input placeholder="Digite seu Nome Completo" class="input" type="text" name="name" />
