@@ -8,19 +8,19 @@ use \src\handlers\UserHandler;
 class ConfigController extends Controller
 {
 
-    private $loggerUser;
+    private $loggedUser;
 
     public function __construct()
     {
-        $this->loggerUser = UserHandler::checkLogin();
-        if (UserHandler::checkLogin() === false) {
+        $this->loggedUser = UserHandler::checkLogin();
+        if ($this->loggedUser === false) {
             $this->redirect('/login');
         }
     }
 
     public function index()
     {
-        $users = UserHandler::getUser( $this->loggerUser->id);
+        $user = UserHandler::getUser($this->loggedUser->id);
 
         $flash = '';
         if (!empty($_SESSION['flash'])) {
@@ -29,8 +29,8 @@ class ConfigController extends Controller
         }
 
         $this->render('config', [
-            'loggedUser' => $this->loggerUser,
-            'users' => $users,
+            'loggedUser' => $this->loggedUser,
+            'user' => $user,
             'flash' => $flash
         ]);
     }
@@ -43,31 +43,31 @@ class ConfigController extends Controller
         $city = filter_input(INPUT_POST, 'city');
         $work = filter_input(INPUT_POST, 'work');
         $password = filter_input(INPUT_POST, 'password');
-        $passwordConfirm = filter_input(INPUT_POST, 'passwordConfirm');
+        $passwordConfirm = filter_input(INPUT_POST, 'password_confirm');
 
         if ($name && $email) {
             $updateFields = [];
 
-            $user = UserHandler::getUser( $this->loggerUser->id);
+            $user = UserHandler::getUser($this->loggedUser->id);
 
             // E-MAIL
-            if ( $user->email != $email ) {
-                if (UserHandler::emailExists($email)) {
+            if ($user->email != $email) {
+                if (!UserHandler::emailExists($email)) {
                     $updateFields['email'] = $email;
                 } else {
-                    $_SESSION['flash'] = 'E-mail já cadastrado!';
+                    $_SESSION['flash'] = 'E-mail já existe!';
                     $this->redirect('/config');
                 }
             }
 
             // BIRTHDATE
             $birthdate = explode('/', $birthdate);
-            if ( count($birthdate) != 3 ) {
+            if (count($birthdate) != 3) {
                 $_SESSION['flash'] = 'Data de nascimento inválida!';
                 $this->redirect('/config');
             }
             $birthdate = $birthdate[2].'-'.$birthdate[1].'-'.$birthdate[0];
-            if ( strtotime($birthdate) === false ) {
+            if (strtotime($birthdate) === false) {
                 $_SESSION['flash'] = 'Data de nascimento inválida!';
                 $this->redirect('/config');
             }
@@ -88,8 +88,6 @@ class ConfigController extends Controller
             $updateFields['city'] = $city;
             $updateFields['work'] = $work;
 
-            UserHandler::updateUser( $this->loggerUser->id, $updateFields);
-
             // AVATAR
             if (isset($_FILES['avatar']) && !empty($_FILES['avatar']['tmp_name'])) {
                 $newAvatar = $_FILES['avatar'];
@@ -99,7 +97,6 @@ class ConfigController extends Controller
                     $updateFields['avatar'] = $avatarName;
                 }
             }
-            
 
             // COVER
             if (isset($_FILES['cover']) && !empty($_FILES['cover']['tmp_name'])) {
@@ -111,9 +108,10 @@ class ConfigController extends Controller
                 }
             }
 
-            UserHandler::updateUser( $this->loggerUser->id, $updateFields);            
-        }
+            UserHandler::updateUser($updateFields, $this->loggedUser->id);
 
+        }
+        
         $this->redirect('/config');
     }
 
